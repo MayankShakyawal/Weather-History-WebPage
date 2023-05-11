@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <title>Temperature Data</title>
+        <style>
+            body {
+                background-image: url('img.jpg');
+                background-size: cover;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            select {
+                font-size: 20px;
+                padding: 10px;
+                border-radius: 5px;
+                margin: 10px;
+                border: none;
+                background-color: #fafbfe;
+                box-shadow: 0px 0px 5px #999;
+            }
+            h1, h2 {
+                color: #af1717;
+                font-size: 40px;
+                text-align: center;
+                text-shadow: 2px 2px #ffffff;
+            }
+            .container {
+                background-color: rgba(255,255,255,0.8);
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0px 0px 10px #fffdfd;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Select a date:</h1>
+            <select id="date-dropdown"></select>
+            <h2 id="temperature"></h2>
+        </div>
+    
+        <script>
+            const apiUrl = `https://archive-api.open-meteo.com/v1/archive?latitude=52.52&longitude=13.41&start_date=2023-04-10&end_date=2023-04-15&daily=temperature_2m_max&timezone=GMT`;
+    
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const dates = data.daily.time;
+                    const temperatures = data.daily.temperature_2m_max;
+                    const dateDropdown = document.getElementById("date-dropdown");
+                    const temperatureText = document.getElementById("temperature");
+    
+                    // Add options to date dropdown
+                    for (let i = 0; i < dates.length; i++) {
+                        const option = document.createElement("option");
+                        option.value = i;
+                        option.text = dates[i];
+                        dateDropdown.appendChild(option);
+                    }
+    
+                    // Update temperature text when date is selected
+                    dateDropdown.addEventListener("change", event => {
+                        const selectedIndex = event.target.value;
+                        const selectedTemperature = temperatures[selectedIndex];
+                        temperatureText.textContent = `Temperature: ${selectedTemperature} °C`;
+                    });
+                })
+                .catch(error => console.error(error));
+        </script>
+    </body>
+    </html>
+    
