@@ -4,11 +4,13 @@ A simple HTML + JavaScript app that shows historical temperatures using the Open
 Pick a date from the dropdown and see the max temperature for that day.
 
 Features
+
 	•	Dropdown with available dates
 	•	Displays max temperature instantly
 	•	Simple, clean UI with background image
 
 Tech
+
 	•	HTML
 	•	CSS
 	•	JavaScript (Fetch API)
